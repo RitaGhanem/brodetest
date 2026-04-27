@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dress — Brodé</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant:wght@300;400;500&family=Jost:wght@200;300;400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{--white:#fff;--off:#F9F8F6;--black:#111110;--mid:#888884;--light:#DDDDD9;--serif:"Cormorant",Georgia,serif;--sans:"Jost",sans-serif}
+html{scroll-behavior:smooth}
+body{background:var(--white);color:var(--black);font-family:var(--sans);font-weight:300;overflow-x:hidden}
+.announce{background:var(--black);color:var(--white);text-align:center;padding:.65rem 1rem;font-size:.62rem;letter-spacing:.25em;text-transform:uppercase}
+nav{position:sticky;top:0;z-index:100;background:var(--white);border-bottom:1px solid var(--light);display:grid;grid-template-columns:1fr auto 1fr;align-items:center;padding:0 3rem;height:64px}
+.nav-left{display:flex;gap:2.5rem;align-items:center}
+.nav-left a,.nav-right a{font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;color:var(--black);text-decoration:none;transition:opacity .2s}
+.nav-left a:hover,.nav-right a:hover{opacity:.45}
+.nav-logo{display:flex;align-items:center;justify-content:center;width:40px;height:40px;color:var(--black);text-decoration:none}
+.nav-right{display:flex;gap:2rem;align-items:center;justify-content:flex-end}
+.breadcrumb-bar{padding:1.25rem 3rem;border-bottom:1px solid var(--light);font-size:.58rem;letter-spacing:.15em;text-transform:uppercase;color:var(--mid)}
+.breadcrumb-bar a{color:var(--mid);text-decoration:none}
+.breadcrumb-bar a:hover{color:var(--black)}
+.dress-layout{display:grid;grid-template-columns:1fr 1fr;min-height:calc(100vh - 130px)}
+.dress-images{background:var(--off);position:relative}
+.main-image{width:100%;height:80vh;object-fit:cover;display:block}
+.thumb-strip{display:flex;gap:2px;padding:2px;background:var(--light)}
+.thumb{width:80px;height:100px;object-fit:cover;cursor:pointer;opacity:.6;transition:opacity .2s;flex-shrink:0}
+.thumb.active,.thumb:hover{opacity:1}
+.dress-tag{position:absolute;top:2rem;left:2rem;background:var(--white);font-size:.52rem;letter-spacing:.2em;text-transform:uppercase;padding:.4rem .8rem}
+.dress-info{padding:4rem;display:flex;flex-direction:column;background:var(--white);overflow-y:auto}
+.dress-eyebrow{font-size:.58rem;letter-spacing:.4em;text-transform:uppercase;color:var(--mid);margin-bottom:1rem}
+.dress-name{font-family:var(--serif);font-size:clamp(2.5rem,4vw,4rem);font-weight:400;letter-spacing:.04em;margin-bottom:.75rem;line-height:1}
+.dress-price{font-size:1.2rem;letter-spacing:.05em;font-weight:300;margin-bottom:2rem;color:var(--black)}
+.divider{border:none;border-top:1px solid var(--light);margin:1.75rem 0}
+.dress-desc{font-size:.78rem;line-height:2.2;color:var(--mid);margin-bottom:2rem}
+.size-label{font-size:.58rem;letter-spacing:.3em;text-transform:uppercase;color:var(--mid);margin-bottom:.75rem}
+.size-grid{display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:2rem}
+.size-btn{width:48px;height:48px;border:1px solid var(--light);background:var(--white);font-size:.65rem;cursor:pointer;transition:border-color .2s,background .2s;font-family:var(--sans);color:var(--black)}
+.size-btn:hover{border-color:var(--black)}
+.size-btn.active{background:var(--black);color:var(--white);border-color:var(--black)}
+.details-grid{display:grid;grid-template-columns:1fr 1fr;border:1px solid var(--light);margin-bottom:2rem}
+.detail-cell{padding:1rem 1.25rem;border-right:1px solid var(--light);border-bottom:1px solid var(--light)}
+.detail-cell:nth-child(even){border-right:none}
+.detail-cell:nth-last-child(-n+2){border-bottom:none}
+.detail-label{font-size:.52rem;letter-spacing:.25em;text-transform:uppercase;color:var(--mid);margin-bottom:.3rem}
+.detail-value{font-size:.72rem;letter-spacing:.05em;font-weight:400}
+.accordion-item{border-top:1px solid var(--light)}
+.accordion-item:last-of-type{border-bottom:1px solid var(--light)}
+.accordion-btn{width:100%;display:flex;justify-content:space-between;align-items:center;padding:1.1rem 0;background:none;border:none;cursor:pointer;font-family:var(--sans);font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;color:var(--black)}
+.accordion-icon{font-size:1rem;font-weight:200;transition:transform .3s}
+.accordion-btn.open .accordion-icon{transform:rotate(45deg)}
+.accordion-body{display:none;padding:0 0 1.25rem;font-size:.75rem;line-height:2;color:var(--mid)}
+.accordion-body.open{display:block}
+.actions{display:flex;flex-direction:column;gap:.75rem;margin-top:2rem}
+.btn-dark{display:inline-block;background:var(--black);color:var(--white);font-family:var(--sans);font-size:.6rem;letter-spacing:.3em;text-transform:uppercase;text-decoration:none;padding:1rem 2.5rem;font-weight:400;transition:background .3s;border:none;cursor:pointer;width:100%;text-align:center}
+.btn-dark:hover{background:#333}
+.btn-outline{display:inline-block;border:1px solid var(--black);color:var(--black);font-family:var(--sans);font-size:.6rem;letter-spacing:.3em;text-transform:uppercase;text-decoration:none;padding:1rem 2.5rem;font-weight:400;transition:background .3s,color .3s;width:100%;text-align:center}
+.btn-outline:hover{background:var(--black);color:var(--white)}
+.related{padding:5rem 3rem;border-top:1px solid var(--light)}
+.section-top{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:2.5rem;padding-bottom:1.25rem;border-bottom:1px solid var(--light)}
+.section-heading{font-family:var(--serif);font-size:1.1rem;font-weight:400;letter-spacing:.15em;text-transform:uppercase}
+.section-link{font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;color:var(--black);text-decoration:none}
+.related-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:2px}
+.product-card{position:relative;cursor:pointer;background:var(--off);text-decoration:none;color:var(--black);display:block}
+.product-img-wrap{position:relative;overflow:hidden;aspect-ratio:3/4}
+.product-img-wrap img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .7s ease}
+.product-card:hover .product-img-wrap img{transform:scale(1.05)}
+.product-quick{position:absolute;bottom:1rem;left:1rem;right:1rem;background:var(--white);font-size:.55rem;letter-spacing:.25em;text-transform:uppercase;text-align:center;padding:.75rem;opacity:0;transform:translateY(6px);transition:opacity .3s,transform .3s}
+.product-card:hover .product-quick{opacity:1;transform:translateY(0)}
+.product-info{padding:.75rem 0 1.25rem;display:flex;justify-content:space-between}
+.product-name{font-size:.72rem;letter-spacing:.12em;text-transform:uppercase}
+.product-price{font-size:.72rem}
+footer{background:var(--black);color:var(--white);padding:4rem 3rem 2.5rem}
+.footer-top{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:4rem;padding-bottom:3rem;border-bottom:1px solid rgba(255,255,255,.1);margin-bottom:2.5rem}
+.footer-logo{color:var(--white);text-decoration:none;display:block;margin-bottom:1.5rem;width:38px;height:44px}
+.footer-about{font-size:.7rem;line-height:2;color:rgba(255,255,255,.4);max-width:28ch;margin-bottom:2rem}
+.footer-wa{display:inline-flex;align-items:center;font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;color:var(--white);text-decoration:none;border-bottom:1px solid rgba(255,255,255,.2);padding-bottom:.25rem}
+.footer-col h5{font-size:.58rem;letter-spacing:.3em;text-transform:uppercase;color:rgba(255,255,255,.4);margin-bottom:1.5rem;font-weight:400}
+.footer-col ul{list-style:none;display:flex;flex-direction:column;gap:.9rem}
+.footer-col a{font-size:.68rem;color:rgba(255,255,255,.65);text-decoration:none;transition:color .2s}
+.footer-col a:hover{color:var(--white)}
+.footer-bottom{display:flex;justify-content:space-between;align-items:center}
+.footer-copy{font-size:.58rem;color:rgba(255,255,255,.25);letter-spacing:.1em}
+.footer-links{display:flex;gap:2rem}
+.footer-links a{font-size:.58rem;color:rgba(255,255,255,.25);text-decoration:none;transition:color .2s}
+.wa-float{position:fixed;bottom:2rem;right:2rem;width:50px;height:50px;background:#25D366;border-radius:50%;display:flex;align-items:center;justify-content:center;z-index:200;text-decoration:none;transition:transform .3s}
+.wa-float:hover{transform:scale(1.1)}
+.wa-float svg{width:24px;height:24px}
+</style>
+</head>
+<body>
+<div class="announce">Free shipping on all orders · Hand-crafted in Beirut · One-of-a-kind pieces</div>
+<nav>
+  <div class="nav-left">
+    <a href="collection.html">Collection</a>
+    <a href="index.html#story">Story</a>
+    <a href="index.html#book">Visit</a>
+  </div>
+  <a href="index.html" class="nav-logo"><svg viewBox="0 0 56 64" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:block">
+  <path d="M30 2 L36 8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+  <path d="M12 20 C12 13 19 11 24 14 C29 17 28 24 23 26 C18 28 12 25 12 20Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/>
+  <path d="M30 20 C30 13 37 11 42 14 C47 17 46 24 41 26 C36 28 30 25 30 20Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/>
+  <path d="M12 42 C12 35 19 33 24 36 C29 39 28 46 23 48 C18 50 12 47 12 42Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/>
+  <path d="M30 42 C30 35 37 33 42 36 C47 39 46 46 41 48 C36 50 30 47 30 42Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/>
+</svg></a>
+  <div class="nav-right">
+    <a href="https://wa.me/9613303429">Book via WhatsApp</a>
+  </div>
+</nav>
+<div class="breadcrumb-bar">
+  <a href="index.html">Home</a> &nbsp;/&nbsp;
+  <a href="collection.html">Collection</a> &nbsp;/&nbsp;
+  <span id="bc-name">—</span>
+</div>
+<div class="dress-layout">
+  <div class="dress-images">
+    <div class="dress-tag">Available</div>
+    <img class="main-image" id="mainImg" src="" alt="">
+    <div class="thumb-strip" id="thumbStrip"></div>
+  </div>
+  <div class="dress-info">
+    <p class="dress-eyebrow">Brodé · Spring 2026</p>
+    <h1 class="dress-name" id="dressName">—</h1>
+    <p class="dress-price" id="dressPrice">—</p>
+    <hr class="divider">
+    <p class="dress-desc" id="dressDesc">—</p>
+    <p class="size-label">Select Size</p>
+    <div class="size-grid">
+      <button class="size-btn" onclick="selectSize(this)">36</button>
+      <button class="size-btn active" onclick="selectSize(this)">38</button>
+      <button class="size-btn" onclick="selectSize(this)">40</button>
+      <button class="size-btn" onclick="selectSize(this)">42</button>
+      <button class="size-btn" onclick="selectSize(this)">44</button>
+    </div>
+    <div class="details-grid">
+      <div class="detail-cell"><p class="detail-label">Origin</p><p class="detail-value">Beirut, Lebanon</p></div>
+      <div class="detail-cell"><p class="detail-label">Technique</p><p class="detail-value">Hand Embroidery</p></div>
+      <div class="detail-cell"><p class="detail-label">Edition</p><p class="detail-value">One of One</p></div>
+      <div class="detail-cell"><p class="detail-label">Delivery</p><p class="detail-value">4–6 Weeks</p></div>
+    </div>
+    <div class="accordion-item">
+      <button class="accordion-btn" onclick="toggleAccordion(this)">Care Instructions <span class="accordion-icon">+</span></button>
+      <div class="accordion-body">Dry clean only. Store in a breathable garment bag away from direct sunlight. Handle embellishments with care.</div>
+    </div>
+    <div class="accordion-item">
+      <button class="accordion-btn" onclick="toggleAccordion(this)">Delivery & Production <span class="accordion-icon">+</span></button>
+      <div class="accordion-body">Made to order with an estimated delivery time of 4–6 weeks. Alterations, color changes and plus sizes are available — contact us via WhatsApp.</div>
+    </div>
+    <div class="accordion-item">
+      <button class="accordion-btn" onclick="toggleAccordion(this)">Bespoke Experience <span class="accordion-icon">+</span></button>
+      <div class="accordion-body">Each Brodé dress can be customised — colors, silhouette, and fit adjusted to your measurements. Our team will guide you through the process.</div>
+    </div>
+    <div class="actions">
+      <a id="waLink" href="https://wa.me/9613303429" class="btn-dark">Book an Appointment via WhatsApp</a>
+      <a href="collection.html" class="btn-outline">← Back to Collection</a>
+    </div>
+  </div>
+</div>
+<section class="related">
+  <div class="section-top">
+    <h2 class="section-heading">You May Also Like</h2>
+    <a href="collection.html" class="section-link">View All →</a>
+  </div>
+  <div class="related-grid" id="relatedGrid"></div>
+</section>
+<footer>
+  <div class="footer-top">
+    <div>
+      <a href="index.html" class="footer-logo"><svg viewBox="0 0 56 64" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:block">
+  <path d="M30 2 L36 8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+  <path d="M12 20 C12 13 19 11 24 14 C29 17 28 24 23 26 C18 28 12 25 12 20Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/>
+  <path d="M30 20 C30 13 37 11 42 14 C47 17 46 24 41 26 C36 28 30 25 30 20Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/>
+  <path d="M12 42 C12 35 19 33 24 36 C29 39 28 46 23 48 C18 50 12 47 12 42Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/>
+  <path d="M30 42 C30 35 37 33 42 36 C47 39 46 46 41 48 C36 50 30 47 30 42Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/>
+</svg></a>
+      <p class="footer-about">A Beirut couture house reviving regional embroidery heritage for the modern luxury client.</p>
+      <a href="https://wa.me/9613303429" class="footer-wa">Book via WhatsApp →</a>
+    </div>
+    <div class="footer-col"><h5>Collection</h5><ul><li><a href="collection.html">All Dresses</a></li></ul></div>
+    <div class="footer-col"><h5>Maison</h5><ul><li><a href="index.html#story">Our Story</a></li><li><a href="index.html#book">Visit Us</a></li></ul></div>
+    <div class="footer-col"><h5>Legal</h5><ul><li><a href="terms.html">Terms & Conditions</a></li><li><a href="delivery-returns.html">Delivery & Returns</a></li><li><a href="#">Privacy Policy</a></li></ul></div>
+  </div>
+  <div class="footer-bottom">
+    <p class="footer-copy">© 2026 Brodé. All rights reserved.</p>
+    <div class="footer-links"><a href="#">Instagram</a><a href="#">TikTok</a><a href="https://wa.me/9613303429">WhatsApp</a></div>
+  </div>
+</footer>
+<a href="https://wa.me/9613303429" class="wa-float" target="_blank"><svg viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg></a>
+<script>
+const DRESSES = {
+  1: { name: "Blanca", price: "$650", desc: "An ivory lace gown with a clean, fitted upper part, floral appliqué detailing, and a straight, elongated silhouette. Elegant, minimal, and easy to wear for any refined occasion.", img: "https://brode.me/wp-content/uploads/2026/02/SBP_0644-copypp-scaled.jpg" },
+  2: { name: "Faye", price: "$650", desc: "A strapless cream dress with a clean, fitted top and layered ruffle tiers that fall all the way down. Soft, feminine, and designed with easy movement.", img: "https://brode.me/wp-content/uploads/2026/02/SBP_1292-copypp-scaled.jpg" },
+  3: { name: "Eden", price: "$850", desc: "A one-shoulder taupe dress with soft draping, a high side slit, and detailed embellishment at the hip. Sleek, refined, and designed to create a flattering, elongated look.", img: "https://brode.me/wp-content/uploads/2026/02/SBP_0012-copy-ii-scaled.jpg" },
+  4: { name: "Muse", price: "$900", desc: "A halter-style gold and beige gown with soft draping, metallic detailing at the waist, and a flowing side train. Elegant and statement-making with a warm, luminous finish.", img: "https://brode.me/wp-content/uploads/2026/02/SBP_0925-copypp-copy-scaled.jpg" },
+  5: { name: "Lysa", price: "$900", desc: "A strapless rose-gold dress with embroidered detailing and a smooth, body-skimming shape that opens into a soft flare. Elegant, feminine, and easy to wear for any special occasion.", img: "https://brode.me/wp-content/uploads/2026/02/SBP_0353-copypp-copy-scaled.jpg" },
+  6: { name: "Mira", price: "$1,000", desc: "A black satin gown with a fitted shape, sheer embroidered neckline, and a subtle flared hem. Sleek, elegant, and designed for a refined evening look.", img: "https://brode.me/wp-content/uploads/2026/02/SBP_0116-copypp-scaled.jpg" },
+  7: { name: "Eris", price: "$1,500", desc: "A mustard and printed gown with a deep V front, a structured waistband, and a flowing skirt that moves beautifully. Bold, airy, and designed to stand out with ease.", img: "https://brode.me/wp-content/uploads/2026/02/SBP_0579-copypp-scaled.jpg" },
+  8: { name: "Storm", price: "$1,200", desc: "A one-shoulder black and silver gown with textured detailing, a sheer layered skirt, and a statement floral accent on the shoulder. Modern, striking, and easy to wear for an evening event.", img: "https://brode.me/wp-content/uploads/2026/02/SBP_0852-copypp-scaled.jpg" },
+  9: { name: "Aria", price: "$1,200", desc: "A strapless gown with a warm orange and black print, featuring a smooth fitted top and a soft, flowing skirt. Bold, fluid, and easy to wear with a striking color palette.", img: "https://brode.me/wp-content/uploads/2026/02/SBP_0644-copypp-scaled.jpg" },
+  10: { name: "Mave", price: "$1,300", desc: "A strapless deep purple gown with a smooth, flowing silhouette and subtle gathered detailing at the front. Elegant, minimal, and designed for an easy, refined evening look.", img: "https://brode.me/wp-content/uploads/2026/02/SBP_1292-copypp-scaled.jpg" },
+  11: { name: "Terra", price: "$1,300", desc: "A one-shoulder gown in blended earth tones with gathered detailing and embellished accents across the top. Soft, fluid, and designed with a natural, organic feel.", img: "https://brode.me/wp-content/uploads/2026/02/SBP_0012-copy-ii-scaled.jpg" },
+  12: { name: "Sienna", price: "$1,400", desc: "A soft blush one-shoulder gown with draped detailing, a flowing sleeve accent, and a relaxed, elegant silhouette. Refined, feminine, and easy to wear for any formal occasion.", img: "https://brode.me/wp-content/uploads/2026/02/SBP_0925-copypp-copy-scaled.jpg" },
+  13: { name: "Taupe", price: "$1,500", desc: "A strapless nude gown with an embroidered top and soft draping along the skirt. Elegant, feminine, and designed with a smooth, flattering shape.", img: "https://brode.me/wp-content/uploads/2026/02/SBP_0353-copypp-copy-scaled.jpg" },
+  14: { name: "Sena", price: "$1,500", desc: "A fitted green mini dress with thin straps, embroidered detailing, and a soft ruffled hem. Fresh, feminine, and designed for an easy, standout look.", img: "https://brode.me/wp-content/uploads/2026/02/SBP_0116-copypp-scaled.jpg" },
+  15: { name: "Kaia", price: "$1,500", desc: "A strapless silver mini dress with floral embroidery and a soft flared hem. Modern, feminine, and easy to wear for an elevated night out.", img: "https://brode.me/wp-content/uploads/2026/02/SBP_0579-copypp-scaled.jpg" },
+  16: { name: "Ayla", price: "$1,500", desc: "A fitted gold mini dress with intricate embroidery and a sheer effect throughout. Bold, modern, and designed to make a statement.", img: "https://brode.me/wp-content/uploads/2026/02/SBP_0852-copypp-scaled.jpg" },
+  17: { name: "Lucia", price: "$1,500", desc: "A one-shoulder rust gown with embroidered detailing on top and a soft, flowing tulle skirt. Warm, elegant, and designed for a standout evening look.", img: "https://brode.me/wp-content/uploads/2026/02/SBP_0644-copypp-scaled.jpg" },
+  18: { name: "Aure", price: "$1,500", desc: "A gradient gown shifting from soft pink to deep burgundy, featuring delicate embroidered details and a flowing, airy skirt. Romantic, feminine, and designed with beautiful movement.", img: "https://brode.me/wp-content/uploads/2026/02/SBP_1292-copypp-scaled.jpg" },
+  19: { name: "Oria", price: "$1,500", desc: "A one-shoulder gold gown with draped detailing and embroidered accents along the side. Sleek, elegant, and designed for a refined evening look.", img: "https://brode.me/wp-content/uploads/2026/02/SBP_0012-copy-ii-scaled.jpg" },
+  20: { name: "Lila", price: "$1,500", desc: "A mini dress featuring a sculpted illusion top and reflective paneling that transitions into a vibrant pink gradient. Sharp, modern, and designed with a standout, high-shine finish.", img: "https://brode.me/wp-content/uploads/2026/02/SBP_0925-copypp-copy-scaled.jpg" },
+  21: { name: "Sia", price: "$1,500", desc: "A strapless silver mini dress covered in textured, mirror-like appliqués that catch the light from every angle. Bold, structured, and made for a standout moment.", img: "https://brode.me/wp-content/uploads/2026/02/SBP_0353-copypp-copy-scaled.jpg" },
+  22: { name: "Léna", price: "$1,500", desc: "A long-sleeve nude gown featuring a low draped back and embroidered sleeves, finished with a smooth, floor-length skirt. Understated from the front and striking from behind.", img: "https://brode.me/wp-content/uploads/2026/02/SBP_0116-copypp-scaled.jpg" },
+  23: { name: "Zia", price: "$1,600", desc: "A fitted mini dress with sheer long sleeves and dense black embroidery creating a bold contrast effect. Sharp, modern, and designed for a confident evening look.", img: "https://brode.me/wp-content/uploads/2026/02/SBP_0579-copypp-scaled.jpg" },
+  24: { name: "Kira", price: "$1,600", desc: "A soft grey gown with delicate floral appliqués placed across the front and a fluid, gathered skirt. Graceful, understated, and designed with gentle movement.", img: "https://brode.me/wp-content/uploads/2026/02/SBP_0852-copypp-scaled.jpg" },
+  25: { name: "Elora", price: "$1,500", desc: "A dusty-rose gown with a textured, embellished top and a smooth, flowing skirt. Soft in color and shape, it offers an effortless, refined look.", img: "https://brode.me/wp-content/uploads/2026/02/SBP_0644-copypp-scaled.jpg" },
+  26: { name: "Mare", price: "$1,700", desc: "A seafoam one-shoulder gown featuring a shimmering embroidered top and gathered draping through the waist. Fresh, modern, and shaped for a sleek, elongated look.", img: "https://brode.me/wp-content/uploads/2026/02/SBP_1292-copypp-scaled.jpg" },
+  27: { name: "Océane", price: "$1,700", desc: "A fitted green gown with thin straps, detailed beadwork, and a flared lower panel that creates a soft mermaid shape. Distinctive, sculpted, and designed for a standout evening look.", img: "https://brode.me/wp-content/uploads/2026/02/SBP_0012-copy-ii-scaled.jpg" },
+  28: { name: "Lina", price: "$1,700", desc: "A halter gown with a soft lilac-to-purple gradient and floral embellishment along the neckline. Light, flowing, and designed with a gentle ombré effect that stands out effortlessly.", img: "https://brode.me/wp-content/uploads/2026/02/SBP_0925-copypp-copy-scaled.jpg" },
+  29: { name: "Cora", price: "$1,700", desc: "A fitted coral gown with intricate beadwork and a soft flare at the hem. Detailed, feminine, and designed with a subtle trailing finish.", img: "https://brode.me/wp-content/uploads/2026/02/SBP_0353-copypp-copy-scaled.jpg" },
+  30: { name: "Sirena", price: "$1,800", desc: "A tiered gown in muted rose and beige tones, featuring a detailed embroidered top and a relaxed, flowing skirt. Soft, textured, and designed with an easy bohemian feel.", img: "https://brode.me/wp-content/uploads/2026/02/SBP_0116-copypp-scaled.jpg" },
+  31: { name: "Melia", price: "$1,800", desc: "A strapless fuchsia gown covered in 3D floral detailing and vertical beaded lines that add length and structure. Rich in texture and designed for a striking entrance.", img: "https://brode.me/wp-content/uploads/2026/02/SBP_0579-copypp-scaled.jpg" },
+  32: { name: "Ona", price: "$1,800", desc: "A printed halter gown blending warm oranges with deep greens and purples, finished with a long, fluid silhouette. Vivid, artistic, and designed to stand out through color and pattern.", img: "https://brode.me/wp-content/uploads/2026/02/SBP_0852-copypp-scaled.jpg" },
+  33: { name: "Thalé", price: "$1,800", desc: "A halter-style printed gown with a wide, flowing skirt and a matching draped scarf detail that moves beautifully. Colorful, airy, and designed with a striking abstract pattern.", img: "https://brode.me/wp-content/uploads/2026/02/SBP_0644-copypp-scaled.jpg" },
+  34: { name: "Zaya", price: "$1,800", desc: "A blue ombré mini dress with scalloped beading and a feathered hem. Playful, detailed, and designed with a light, dancing movement.", img: "https://brode.me/wp-content/uploads/2026/02/SBP_1292-copypp-scaled.jpg" },
+  35: { name: "Céa", price: "$1,800", desc: "A strapless rust gown with a textured, lace-covered top and a smooth mermaid-style flare. Warm-toned, structured, and made for a refined evening look.", img: "https://brode.me/wp-content/uploads/2026/02/SBP_0012-copy-ii-scaled.jpg" },
+  36: { name: "Talia", price: "$1,800", desc: "A strapless printed gown with a fitted embroidered top and a wide, dramatic skirt that moves with volume. Bold, artistic, and designed for a striking, high-impact look.", img: "https://brode.me/wp-content/uploads/2026/02/SBP_0925-copypp-copy-scaled.jpg" },
+  37: { name: "Vea", price: "$1,800", desc: "A teal gown with embellished straps and a detailed top, paired with a light, flowing skirt. Refined, airy, and designed for easy movement.", img: "https://brode.me/wp-content/uploads/2026/02/SBP_0353-copypp-copy-scaled.jpg" },
+  38: { name: "Raya", price: "$1,900", desc: "A strapless plum gown with diagonal embellished accents and layered draping through the skirt. Rich in color and movement, it offers a dramatic yet refined look.", img: "https://brode.me/wp-content/uploads/2026/02/SBP_0116-copypp-scaled.jpg" },
+  39: { name: "Fia", price: "$2,000", desc: "A gold gown with intricate all-over embellishment and a straight, structured silhouette that opens into a light, fluid hem. Striking, detailed, and designed to make an impression.", img: "https://brode.me/wp-content/uploads/2026/02/SBP_0579-copypp-scaled.jpg" },
+  40: { name: "Nola", price: "$2,200", desc: "A strapless purple gown with textured detailing and a slim, elongated silhouette that extends into a small train. Bold in color and polished in shape.", img: "https://brode.me/wp-content/uploads/2026/02/SBP_0852-copypp-scaled.jpg" },
+  41: { name: "Cara", price: "$2,200", desc: "A strapless terracotta gown with a structured, embellished midsection and a lightweight tulle skirt. Soft in movement and rich in tone, it creates a refined, standout look.", img: "https://brode.me/wp-content/uploads/2026/02/SBP_0644-copypp-scaled.jpg" },
+  42: { name: "Zora", price: "$2,500", desc: "A black gown with an asymmetrical neckline, contrast embroidery at the waist, and a sheer pleated panel that adds movement. Sleek, distinctive, and designed for an elegant evening look.", img: "https://brode.me/wp-content/uploads/2026/02/SBP_1292-copypp-scaled.jpg" },
+  43: { name: "Rhea", price: "$2,200", desc: "A strapless fuchsia gown with a shimmering embellished top and a light tulle overlay that softens the silhouette. Bright, feminine, and designed to catch the light with every movement.", img: "https://brode.me/wp-content/uploads/2026/02/SBP_0012-copy-ii-scaled.jpg" },
+  44: { name: "Lana", price: "$2,700", desc: "A pale gold gown with a sheer embroidered top and a fitted lace skirt that extends into a subtle flare. Light, detailed, and designed with a refined, sculpted finish.", img: "https://brode.me/wp-content/uploads/2026/02/SBP_0925-copypp-copy-scaled.jpg" },
+  45: { name: "Clara", price: "$2,900", desc: "A high-neck nude gown with sculpted embroidery and a fitted shape that opens into a soft flare. Intricate, structured, and designed to create a refined, elevated look.", img: "https://brode.me/wp-content/uploads/2026/02/SBP_0353-copypp-copy-scaled.jpg" },
+  46: { name: "Ella", price: "$2,900", desc: "A black gown with an asymmetrical neckline, intricate lace appliqué on the top, and a full flowing skirt. Dramatic, sculpted, and designed for a strong evening presence.", img: "https://brode.me/wp-content/uploads/2026/02/SBP_0116-copypp-scaled.jpg" }
+};
+
+function getParam(key) {
+  return new URLSearchParams(window.location.search).get(key);
+}
+
+function switchImg(thumb, src) {
+  document.getElementById('mainImg').src = src;
+  document.querySelectorAll('.thumb').forEach(t => t.classList.remove('active'));
+  thumb.classList.add('active');
+}
+
+function selectSize(btn) {
+  document.querySelectorAll('.size-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+}
+
+function toggleAccordion(btn) {
+  const body = btn.nextElementSibling;
+  const isOpen = body.classList.contains('open');
+  document.querySelectorAll('.accordion-body').forEach(b => b.classList.remove('open'));
+  document.querySelectorAll('.accordion-btn').forEach(b => b.classList.remove('open'));
+  if (!isOpen) { body.classList.add('open'); btn.classList.add('open'); }
+}
+
+function loadDress() {
+  const id = parseInt(getParam('id')) || 35;
+  const d = DRESSES[id];
+  if (!d) { window.location.href = 'collection.html'; return; }
+
+  document.title = d.name + ' — Brodé';
+  document.getElementById('bc-name').textContent = d.name;
+  document.getElementById('dressName').textContent = d.name;
+  document.getElementById('dressPrice').textContent = d.price;
+  document.getElementById('dressDesc').textContent = d.desc;
+  document.getElementById('mainImg').src = d.img;
+  document.getElementById('mainImg').alt = d.name;
+  document.getElementById('waLink').href = 'https://wa.me/9613303429?text=I%27m%20interested%20in%20' + encodeURIComponent(d.name) + '%20(' + encodeURIComponent(d.price) + ')';
+
+  // Thumbs - show same image 3x (real photos would go here)
+  const strip = document.getElementById('thumbStrip');
+  strip.innerHTML = [d.img, d.img, d.img].map((src, i) =>
+    `<img class="thumb ${i===0?'active':''}" src="${src}" onclick="switchImg(this,'${src}')" alt="${d.name}">`
+  ).join('');
+
+  // Related - show 4 random other dresses
+  const keys = Object.keys(DRESSES).filter(k => parseInt(k) !== id);
+  const picks = keys.sort(() => Math.random() - 0.5).slice(0, 4);
+  document.getElementById('relatedGrid').innerHTML = picks.map(k => {
+    const r = DRESSES[k];
+    return `<a href="dress.html?id=${k}" class="product-card">
+      <div class="product-img-wrap"><img src="${r.img}" alt="${r.name}" loading="lazy"><div class="product-quick">View Details</div></div>
+      <div class="product-info"><span class="product-name">${r.name}</span><span class="product-price">${r.price}</span></div>
+    </a>`;
+  }).join('');
+}
+
+loadDress();
+</script>
+</body>
+</html>

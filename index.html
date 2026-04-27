@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Brodé — Beirut Couture</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant:wght@300;400;500&family=Jost:wght@200;300;400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+:root {
+  --white: #ffffff;
+  --off: #F9F8F6;
+  --black: #111110;
+  --mid: #888884;
+  --light: #DDDDD9;
+  --serif: 'Tenor Sans', Georgia, serif;
+  --sans: 'Jost', sans-serif;
+}
+html { scroll-behavior: smooth; }
+body { background: var(--white); color: var(--black); font-family: var(--sans); font-weight: 300; overflow-x: hidden; }
+
+/* ANNOUNCE */
+.announce { background: var(--black); color: var(--white); text-align: center; padding: 0.65rem 1rem; font-size: 0.62rem; letter-spacing: 0.25em; text-transform: uppercase; }
+
+/* NAV */
+nav { position: sticky; top: 0; z-index: 100; background: var(--white); border-bottom: 1px solid var(--light); display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; padding: 0 3rem; height: 64px; }
+.nav-left { display: flex; gap: 2.5rem; align-items: center; }
+.nav-left a, .nav-right a { font-size: 0.62rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--black); text-decoration: none; transition: opacity 0.2s; }
+.nav-left a:hover, .nav-right a:hover { opacity: 0.45; }
+.nav-logo { font-family: "Cormorant", Georgia, serif; font-size: 2rem; font-weight: 400; letter-spacing: 0.04em; color: var(--black); text-decoration: none; text-align: center; text-transform: none; line-height: 1; }
+.nav-right { display: flex; gap: 2rem; align-items: center; justify-content: flex-end; }
+
+/* HERO */
+.hero { display: grid; grid-template-columns: 1fr 1fr; min-height: calc(100vh - 100px); }
+.hero-carousel { position: relative; overflow: hidden; background: var(--off); }
+.hero-slide { position: absolute; inset: 0; opacity: 0; transition: opacity 0.9s ease; }
+.hero-slide.active { opacity: 1; position: relative; }
+.hero-slide img { width: 100%; height: 100%; object-fit: cover; display: block; min-height: 600px; }
+.hero-dots { position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%); display: flex; gap: 0.6rem; z-index: 5; }
+.hero-dot { width: 7px; height: 7px; border-radius: 50%; background: rgba(17,17,16,0.25); cursor: pointer; transition: background 0.3s; border: none; padding: 0; }
+.hero-dot.active { background: var(--black); }
+.hero-content { display: flex; flex-direction: column; justify-content: center; padding: 5rem 5rem 5rem 6rem; background: var(--off); position: relative; }
+.hero-label { font-size: 0.58rem; letter-spacing: 0.4em; text-transform: uppercase; color: var(--mid); margin-bottom: 2rem; }
+.hero-title { font-family: var(--serif); font-size: clamp(3rem, 5vw, 5.5rem); font-weight: 400; line-height: 1.05; letter-spacing: 0.02em; margin-bottom: 2rem; color: var(--black); }
+.hero-title span { display: block; font-family: var(--sans); font-weight: 200; font-size: 0.45em; letter-spacing: 0.3em; text-transform: uppercase; color: var(--mid); margin-bottom: 0.5rem; }
+.hero-desc { font-size: 0.78rem; line-height: 2; color: var(--mid); max-width: 32ch; margin-bottom: 3rem; font-weight: 300; }
+.btn-dark { display: inline-block; background: var(--black); color: var(--white); font-family: var(--sans); font-size: 0.6rem; letter-spacing: 0.3em; text-transform: uppercase; text-decoration: none; padding: 1rem 2.5rem; font-weight: 400; transition: background 0.3s; align-self: flex-start; }
+.btn-dark:hover { background: #333; }
+.btn-outline { display: inline-block; border: 1px solid var(--black); color: var(--black); font-family: var(--sans); font-size: 0.6rem; letter-spacing: 0.3em; text-transform: uppercase; text-decoration: none; padding: 1rem 2.5rem; font-weight: 400; transition: background 0.3s, color 0.3s; align-self: flex-start; }
+.btn-outline:hover { background: var(--black); color: var(--white); }
+.hero-pillars { position: absolute; bottom: 3rem; left: 6rem; display: flex; gap: 2.5rem; }
+.hero-pillar { text-align: center; }
+.hero-pillar-num { font-family: var(--serif); font-size: 1.6rem; color: var(--black); display: block; line-height: 1; margin-bottom: 0.25rem; }
+.hero-pillar-label { font-size: 0.55rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--mid); }
+
+/* MARQUEE */
+.marquee-wrap { overflow: hidden; border-top: 1px solid var(--light); border-bottom: 1px solid var(--light); padding: 1.1rem 0; }
+.marquee-track { display: flex; gap: 4rem; animation: marquee 30s linear infinite; white-space: nowrap; }
+.marquee-track span { font-size: 0.6rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--black); flex-shrink: 0; }
+.marquee-track .sep { color: var(--light); }
+
+/* COLLECTION */
+.collection { padding: 5rem 3rem; }
+.section-top { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 2.5rem; padding-bottom: 1.25rem; border-bottom: 1px solid var(--light); }
+.section-top-left { display: flex; align-items: baseline; gap: 1.5rem; }
+.section-heading { font-family: var(--serif); font-size: 1.1rem; font-weight: 400; letter-spacing: 0.15em; text-transform: uppercase; }
+.section-count { font-size: 0.6rem; color: var(--mid); letter-spacing: 0.15em; }
+.section-link { font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--black); text-decoration: none; display: flex; align-items: center; gap: 0.5rem; transition: opacity 0.2s; }
+.section-link:hover { opacity: 0.5; }
+.product-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2px; }
+.product-card { position: relative; cursor: pointer; background: var(--off); text-decoration: none; color: var(--black); display: block; }
+.product-img-wrap { position: relative; overflow: hidden; aspect-ratio: 3/4; }
+.product-img-wrap img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.7s cubic-bezier(0.25,0.46,0.45,0.94); }
+.product-card:hover .product-img-wrap img { transform: scale(1.06); }
+.product-tag { position: absolute; top: 1rem; left: 1rem; background: var(--white); color: var(--black); font-size: 0.52rem; letter-spacing: 0.2em; text-transform: uppercase; padding: 0.35rem 0.75rem; font-weight: 400; }
+.product-quick { position: absolute; bottom: 1rem; left: 1rem; right: 1rem; background: var(--white); color: var(--black); font-size: 0.55rem; letter-spacing: 0.25em; text-transform: uppercase; text-align: center; padding: 0.75rem; opacity: 0; transform: translateY(6px); transition: opacity 0.3s, transform 0.3s; font-weight: 400; }
+.product-card:hover .product-quick { opacity: 1; transform: translateY(0); }
+.product-info { padding: 1rem 0 1.5rem; display: flex; justify-content: space-between; align-items: baseline; }
+.product-name { font-size: 0.75rem; letter-spacing: 0.12em; text-transform: uppercase; font-weight: 400; }
+.product-edition { font-size: 0.6rem; letter-spacing: 0.1em; color: var(--mid); text-transform: uppercase; }
+
+/* STORY */
+.story { display: grid; grid-template-columns: 1fr 1fr; min-height: 80vh; border-top: 1px solid var(--light); }
+.story-content { display: flex; flex-direction: column; justify-content: center; padding: 6rem; background: var(--white); }
+.story-eyebrow { font-size: 0.58rem; letter-spacing: 0.4em; text-transform: uppercase; color: var(--mid); margin-bottom: 1.5rem; }
+.story-title { font-family: var(--serif); font-size: clamp(2.2rem, 3.5vw, 4rem); font-weight: 400; line-height: 1.1; letter-spacing: 0.02em; margin-bottom: 2rem; }
+.story-text { font-size: 0.8rem; line-height: 2.2; color: var(--mid); max-width: 38ch; margin-bottom: 3rem; }
+.story-facts { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0; margin-bottom: 3rem; border: 1px solid var(--light); }
+.story-fact { padding: 1.5rem; border-right: 1px solid var(--light); text-align: center; }
+.story-fact:last-child { border-right: none; }
+.story-fact-num { font-family: var(--serif); font-size: 1.8rem; display: block; margin-bottom: 0.3rem; }
+.story-fact-label { font-size: 0.55rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--mid); }
+.story-img { background-size: cover; background-position: center; }
+
+/* BOOK */
+.book { border-top: 1px solid var(--light); display: grid; grid-template-columns: 1fr 1fr; }
+.book-img { background: url('https://brode.me/wp-content/uploads/2026/03/Brode-1-1.jpg') center 20%/cover no-repeat; min-height: 500px; }
+.book-content { display: flex; flex-direction: column; justify-content: center; padding: 5rem 6rem; background: var(--off); }
+.book-title { font-family: var(--serif); font-size: clamp(2rem, 3vw, 3.5rem); font-weight: 400; line-height: 1.1; margin-bottom: 1.5rem; letter-spacing: 0.02em; }
+.book-text { font-size: 0.78rem; line-height: 2; color: var(--mid); max-width: 36ch; margin-bottom: 2.5rem; }
+.book-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
+
+/* FOOTER */
+footer { background: var(--black); color: var(--white); padding: 4rem 3rem 2.5rem; }
+.footer-top { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 4rem; padding-bottom: 3rem; border-bottom: 1px solid rgba(255,255,255,0.1); margin-bottom: 2.5rem; }
+.footer-logo { font-family: "Cormorant", Georgia, serif; font-size: 2.4rem; font-weight: 400; letter-spacing: 0.04em; color: var(--white); text-decoration: none; display: block; margin-bottom: 1.5rem; text-transform: none; }
+.footer-about { font-size: 0.7rem; line-height: 2; color: rgba(255,255,255,0.4); max-width: 28ch; margin-bottom: 2rem; }
+.footer-wa { display: inline-flex; align-items: center; gap: 0.75rem; font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--white); text-decoration: none; border-bottom: 1px solid rgba(255,255,255,0.2); padding-bottom: 0.25rem; transition: border-color 0.3s; }
+.footer-wa:hover { border-color: var(--white); }
+.footer-col h5 { font-size: 0.58rem; letter-spacing: 0.3em; text-transform: uppercase; color: rgba(255,255,255,0.4); margin-bottom: 1.5rem; font-weight: 400; }
+.footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 0.9rem; }
+.footer-col a { font-size: 0.68rem; color: rgba(255,255,255,0.65); text-decoration: none; letter-spacing: 0.05em; transition: color 0.2s; }
+.footer-col a:hover { color: var(--white); }
+.footer-bottom { display: flex; justify-content: space-between; align-items: center; }
+.footer-copy { font-size: 0.58rem; color: rgba(255,255,255,0.25); letter-spacing: 0.1em; }
+.footer-links { display: flex; gap: 2rem; }
+.footer-links a { font-size: 0.58rem; color: rgba(255,255,255,0.25); text-decoration: none; letter-spacing: 0.1em; transition: color 0.2s; }
+.footer-links a:hover { color: rgba(255,255,255,0.6); }
+
+/* WA FLOAT */
+.wa-float { position: fixed; bottom: 2rem; right: 2rem; width: 50px; height: 50px; background: #25D366; border-radius: 50%; display: flex; align-items: center; justify-content: center; z-index: 200; text-decoration: none; transition: transform 0.3s; }
+.wa-float:hover { transform: scale(1.1); }
+.wa-float svg { width: 24px; height: 24px; }
+
+/* FADE IN */
+.fade-in { opacity: 0; transform: translateY(20px); transition: opacity 0.7s ease, transform 0.7s ease; }
+.fade-in.visible { opacity: 1; transform: translateY(0); }
+
+@keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+</style>
+</head>
+<body>
+
+<div class="announce">Free shipping on all orders · Hand-crafted in Beirut · One-of-a-kind pieces</div>
+
+<nav>
+  <div class="nav-left">
+    <a href="collection.html">Collection</a>
+    <a href="#story">Story</a>
+    <a href="#book">Visit</a>
+  </div>
+  <a href="index.html" class="nav-logo" style="display:flex;align-items:center;justify-content:center;width:40px;height:40px;color:var(--black);text-decoration:none"><svg viewBox="0 0 56 64" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:block">
+  <path d="M30 2 L36 8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+  <path d="M12 20 C12 13 19 11 24 14 C29 17 28 24 23 26 C18 28 12 25 12 20Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/>
+  <path d="M30 20 C30 13 37 11 42 14 C47 17 46 24 41 26 C36 28 30 25 30 20Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/>
+  <path d="M12 42 C12 35 19 33 24 36 C29 39 28 46 23 48 C18 50 12 47 12 42Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/>
+  <path d="M30 42 C30 35 37 33 42 36 C47 39 46 46 41 48 C36 50 30 47 30 42Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/>
+</svg></a>
+  <div class="nav-right">
+    <a href="https://wa.me/9613303429">Book via WhatsApp</a>
+    
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-carousel" id="heroCarousel">
+    <div class="hero-slide active">
+      <img src="https://brode.me/wp-content/uploads/2026/02/SBP_0644-copypp-scaled.jpg" alt="Céa — Brodé">
+    </div>
+    <div class="hero-slide">
+      <img src="https://brode.me/wp-content/uploads/2026/02/SBP_0579-copypp-scaled.jpg" alt="Cara — Brodé">
+    </div>
+    <div class="hero-slide">
+      <img src="https://brode.me/wp-content/uploads/2026/02/SBP_0353-copypp-copy-scaled.jpg" alt="Ona — Brodé">
+    </div>
+    <div class="hero-dots">
+      <button class="hero-dot active" onclick="goToSlide(0)"></button>
+      <button class="hero-dot" onclick="goToSlide(1)"></button>
+      <button class="hero-dot" onclick="goToSlide(2)"></button>
+    </div>
+  </div>
+  <div class="hero-content">
+    <p class="hero-label">Beirut Couture · Spring 2026</p>
+    <h1 class="hero-title">
+      <span>Hand-stitched</span>
+      Brodé<br>Dresses
+    </h1>
+    <p class="hero-desc">Every piece is one of a kind — hand-embroidered from start to finish, each design is entirely unique and will never be repeated.</p>
+    <a href="collection.html" class="btn-dark">Shop the Collection</a>
+    <div class="hero-pillars">
+      <div class="hero-pillar">
+        <span class="hero-pillar-num">46</span>
+        <span class="hero-pillar-label">Dresses</span>
+      </div>
+      <div class="hero-pillar">
+        <span class="hero-pillar-num">1</span>
+        <span class="hero-pillar-label">Of each</span>
+      </div>
+      <div class="hero-pillar">
+        <span class="hero-pillar-num">∞</span>
+        <span class="hero-pillar-label">Hours</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-wrap">
+  <div class="marquee-track">
+    <span>Hand-Stitched Craftsmanship</span><span class="sep">—</span>
+    <span>One-of-a-Kind Designs</span><span class="sep">—</span>
+    <span>Regional Heritage Revived</span><span class="sep">—</span>
+    <span>Each Piece Entirely Unique</span><span class="sep">—</span>
+    <span>Beirut Couture House</span><span class="sep">—</span>
+    <span>Made to Order</span><span class="sep">—</span>
+    <span>Hand-Stitched Craftsmanship</span><span class="sep">—</span>
+    <span>One-of-a-Kind Designs</span><span class="sep">—</span>
+    <span>Regional Heritage Revived</span><span class="sep">—</span>
+    <span>Each Piece Entirely Unique</span><span class="sep">—</span>
+    <span>Beirut Couture House</span><span class="sep">—</span>
+    <span>Made to Order</span><span class="sep">—</span>
+  </div>
+</div>
+
+<!-- COLLECTION PREVIEW (4 dresses) -->
+<section class="collection" id="collection">
+  <div class="section-top">
+    <div class="section-top-left">
+      <h2 class="section-heading">The Collection</h2>
+      <span class="section-count">46 pieces</span>
+    </div>
+    <a href="collection.html" class="section-link">View All 46 Pieces →</a>
+  </div>
+  <div class="product-grid">
+    <a href="dress.html?id=35" class="product-card fade-in">
+      <div class="product-img-wrap">
+        <img src="https://brode.me/wp-content/uploads/2026/02/SBP_0644-copypp-scaled.jpg" alt="Céa">
+        <div class="product-tag">Available</div>
+        <div class="product-quick">View Details</div>
+      </div>
+      <div class="product-info">
+        <span class="product-name">Céa</span>
+        <span class="product-edition">One of One</span>
+      </div>
+    </a>
+    <a href="dress.html?id=34" class="product-card fade-in">
+      <div class="product-img-wrap">
+        <img src="https://brode.me/wp-content/uploads/2026/02/SBP_0925-copypp-copy-scaled.jpg" alt="Zaya">
+        <div class="product-tag">Available</div>
+        <div class="product-quick">View Details</div>
+      </div>
+      <div class="product-info">
+        <span class="product-name">Zaya</span>
+        <span class="product-edition">One of One</span>
+      </div>
+    </a>
+    <a href="dress.html?id=32" class="product-card fade-in">
+      <div class="product-img-wrap">
+        <img src="https://brode.me/wp-content/uploads/2026/02/SBP_0353-copypp-copy-scaled.jpg" alt="Ona">
+        <div class="product-tag">Available</div>
+        <div class="product-quick">View Details</div>
+      </div>
+      <div class="product-info">
+        <span class="product-name">Ona</span>
+        <span class="product-edition">One of One</span>
+      </div>
+    </a>
+    <a href="dress.html?id=2" class="product-card fade-in">
+      <div class="product-img-wrap">
+        <img src="https://brode.me/wp-content/uploads/2026/02/SBP_1292-copypp-scaled.jpg" alt="Faye">
+        <div class="product-tag">Available</div>
+        <div class="product-quick">View Details</div>
+      </div>
+      <div class="product-info">
+        <span class="product-name">Faye</span>
+        <span class="product-edition">One of One</span>
+      </div>
+    </a>
+  </div>
+</section>
+
+<!-- STORY -->
+<section class="story" id="story">
+  <div class="story-content">
+    <p class="story-eyebrow">Our Maison</p>
+    <h2 class="story-title">About<br>brodé</h2>
+    <p class="story-text">Brodé is a Beirut-based couture house that revives regional embroidery heritage for today's luxury client. Every gown is hand-stitched, start to finish. Each design is entirely unique and will never be repeated.</p>
+    <div class="story-facts">
+      <div class="story-fact">
+        <span class="story-fact-num">46</span>
+        <span class="story-fact-label">Dresses</span>
+      </div>
+      <div class="story-fact">
+        <span class="story-fact-num">1/1</span>
+        <span class="story-fact-label">Unique Each</span>
+      </div>
+      <div class="story-fact">
+        <span class="story-fact-num">BEY</span>
+        <span class="story-fact-label">Made in Beirut</span>
+      </div>
+    </div>
+    <a href="https://wa.me/9613303429" class="btn-dark">Book an Appointment</a>
+  </div>
+  <div class="story-img" style="background: url('https://brode.me/wp-content/uploads/2026/02/SBP_0852-copypp-scaled.jpg') center/cover no-repeat;"></div>
+</section>
+
+<!-- BOOK -->
+<section class="book" id="book">
+  <div class="book-img"></div>
+  <div class="book-content">
+    <p class="story-eyebrow">Private Appointments</p>
+    <h2 class="book-title">Visit the<br>Brodé Atelier</h2>
+    <p class="book-text">Step into our Beirut atelier for a private styling session. Each appointment is personal — we guide you through our current collection and archive pieces.</p>
+    <div class="book-actions">
+      <a href="https://wa.me/9613303429" class="btn-dark">Book via WhatsApp</a>
+      <a href="collection.html" class="btn-outline">Shop Online</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div>
+      <a href="index.html" class="footer-logo" style="display:block;margin-bottom:1.5rem;color:var(--white);text-decoration:none;width:38px;height:44px"><svg viewBox="0 0 56 64" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:block">
+      <p class="footer-about">A Beirut couture house reviving regional embroidery heritage for the modern luxury client.</p>
+      <a href="https://wa.me/9613303429" class="footer-wa">Book via WhatsApp →</a>
+    </div>
+    <div class="footer-col">
+      <h5>Collection</h5>
+      <ul>
+        <li><a href="collection.html">All Dresses</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h5>Maison</h5>
+      <ul>
+        <li><a href="index.html#story">Our Story</a></li>
+        <li><a href="index.html#book">Visit Us</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h5>Legal</h5>
+      <ul>
+        <li><a href="terms.html">Terms & Conditions</a></li>
+        <li><a href="delivery-returns.html">Delivery & Returns</a></li>
+        <li><a href="#">Privacy Policy</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p class="footer-copy">© 2026 Brodé. All rights reserved.</p>
+    <div class="footer-links">
+      <a href="#">Instagram</a>
+      <a href="#">TikTok</a>
+      <a href="https://wa.me/9613303429">WhatsApp</a>
+    </div>
+  </div>
+</footer>
+
+<a href="https://wa.me/9613303429" class="wa-float" target="_blank" aria-label="WhatsApp">
+  <svg viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+</a>
+
+<script>
+let current = 0;
+const slides = document.querySelectorAll('.hero-slide');
+const dots = document.querySelectorAll('.hero-dot');
+
+function goToSlide(n) {
+  slides[current].classList.remove('active');
+  dots[current].classList.remove('active');
+  current = n;
+  slides[current].classList.add('active');
+  dots[current].classList.add('active');
+}
+
+setInterval(() => goToSlide((current + 1) % slides.length), 4000);
+
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach((e, i) => { if (e.isIntersecting) setTimeout(() => e.target.classList.add('visible'), i * 100); });
+}, { threshold: 0.1 });
+document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
